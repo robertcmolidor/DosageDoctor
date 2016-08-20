@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using DosageDoctor.Infrastructure;
 using DosageDoctor.ViewModles;
 using Microsoft.AspNet.Identity;
+using DosageDoctor.Models;
 
 namespace DosageDoctor.Controllers
 {
@@ -19,20 +20,62 @@ namespace DosageDoctor.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
+            var userId = User.Identity.GetUserId();
             var viewModel = new PatientIndexViewModel();
             using (var db = new AppDbContext())
             {
 
-                viewModel.Patient = await db.Patients.Where(x => x.PatientId.ToString() == User.Identity.GetUserId()).FirstOrDefaultAsync();
+                viewModel.Patient = await db.Patients.Where(x => x.PatientId.ToString() == userId).FirstOrDefaultAsync();
                 viewModel.Doctors = await db.Doctors.ToListAsync();
                 viewModel.Medications = await db.Medications.ToListAsync();
             }
 
 
-                return View(GetData("Index"));
+                return View(viewModel);
         }
 
-        [Authorize(Roles = "Users")]
+        public async Task<ActionResult> AddMedication()
+        {
+            var viewModel = new AddMedicationViewModel();
+            using (var db = new AppDbContext())
+            {
+
+                viewModel.Medications = await db.Medications.ToListAsync();
+            }
+
+
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddMedication(AddMedicationViewModel input)
+        {
+            
+            using (var db = new AppDbContext())
+            {
+                var medicine = new Medication()
+                {
+                    DosesPerDay = input.MedicationUpdate.DosesPerDay,
+                    ExpriationDate = input.MedicationUpdate.ExpriationDate,
+                    CurrentQuantity = input.MedicationUpdate.CurrentQuantity,
+                    DoseTimeOfDay = input.MedicationUpdate.DoseTimeOfDay,
+                    IssueDate = input.MedicationUpdate.IssueDate,
+                    MedicationId = Guid.NewGuid(),
+                    Name = input.MedicationUpdate.Name,
+                    Refills = input.MedicationUpdate.Refills,
+                    UserId = new Guid(User.Identity.GetUserId()),
+                    WeightPerDose = input.MedicationUpdate.WeightPerDose
+                };
+                db.Medications.Add(medicine);
+                await db.SaveChangesAsync();
+
+            }
+
+
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult OtherAction()
         {
             return View("Index", GetData("OtherAction"));

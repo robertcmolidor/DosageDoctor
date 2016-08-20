@@ -1,7 +1,14 @@
-﻿@{
+﻿@model DosageDoctor.ViewModles.PatientIndexViewModel
+@using DosageDoctor.Models
+@{
     ViewBag.Title = "Index";
 }
-<div class="panel panel-primary">
+<style>
+    Body {
+        background-color: #3FB4D7;
+    }
+</style>
+@*<div class="panel panel-primary">
     <div class="panel-heading">Patient View</div>
     <table class="table table-striped">
         @foreach (string key in Model.Keys)
@@ -12,5 +19,33 @@
             </tr>
         }
     </table>
-</div>
+</div>*@
+
+<table class="table table-striped">
+    <tr><th>Name</th><th>Quantity</th><th>Doses Per Day</th><th></th></tr>
+    @if (Model.Patient == null)
+    {
+        <tr><td colspan="3" class="text-center">No Medications</td></tr>
+    }
+    else {
+        foreach (var meds in Model.Medications)
+        {
+            <tr>
+                <td>@meds.Name</td>
+                <td>@meds.CurrentQuantity</td>
+                <td>@meds.DosesPerDay</td>
+                @*<td>
+                    @using (Html.BeginForm("Delete", "Admin", new { id = user.Id }))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = user.Id }, new { @class = "btn btn-primary btn-xs" })
+                        <button class="btn btn-danger btn-xs" type="submit">Delete</button>
+                    }
+                </td>*@
+            </tr>
+        }
+    }
+</table>
+
 @Html.ActionLink("Sign Out", "Logout", "Account", null, new { @class = "btn btn - primary" })
+
+@Html.ActionLink("Add New Medication", "AddMedication", "PatientHome", null, new { @class = "btn btn - primary" })

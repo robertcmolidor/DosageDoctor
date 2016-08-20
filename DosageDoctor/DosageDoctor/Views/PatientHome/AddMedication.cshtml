@@ -1,0 +1,88 @@
+﻿@model DosageDoctor.ViewModles.AddMedicationViewModel
+
+
+
+@{
+    ViewBag.Title = "AddMedication";
+}
+<style>
+    Body {
+        background-color: #3FB4D7;
+    }
+
+    .footer {
+        margin-top: 20px;
+        background-image: linear-gradient(90deg, #4F364C, #FFFFFF);
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+<h2>AddMedication</h2>
+
+@using (Html.BeginForm())
+{
+
+    <form method="post" name="sign-up-form" class="sign-up-form" id="signup_home_header">
+        <div class="field">
+            @Html.TextBoxFor(m => m.MedicationUpdate.Name, new { @class = "" })
+        </div>
+        <div class="field">
+            @Html.TextBoxFor(m => m.MedicationUpdate.DosesPerDay, new { @class = "" })
+        </div>
+        <div class="field">
+            @Html.TextBoxFor(m => m.MedicationUpdate.CurrentQuantity, new { @class = "" })
+        </div>
+
+        <div>
+            <input type="submit" id="addbutton" class="addbutton sign-up-btn btn" value="Add medicine" />
+        </div>
+    </form>
+}
+
+<div id="dashboardpage">
+
+    <h2>List of all medicines</h2>
+    <footer id="footer" class="footer">
+        <div class="row row-footer">
+            <div class="col-xs-6 text-left left">
+                <small>DosageDoctor&trade;</small>
+            </div>
+            <div class="col-xs-6 text-right">
+                <small></small>
+            </div>
+        </div>
+    </footer>
+
+
+
+    @if (Model != null)
+    {
+        foreach (var med in Model.Medications)
+        {
+            <div id="@med.Name." class="panel panel-default">
+                <div class="tweet">
+                    <label>@med.DosesPerDay</label> times per day
+                    <span class="timestamp">@med.CurrentQuantity</span> days
+                    <div>
+                        Medicine Name:<p>@med.Name</p>
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+    else
+    {
+        <p>There are no medications to show.</p>
+    }
+    <footer id="footer" class="footer">
+        <div class="row row-footer">
+            <div class="col-xs-6 text-left left">
+                <small>DosageDoctor&trade;</small>
+            </div>
+            <div class="col-xs-6 text-right">
+                <small></small>
+            </div>
+        </div>
+    </footer>
+</div>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using DosageDoctor.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DosageDoctor.Controllers
 {
@@ -32,12 +34,12 @@ namespace DosageDoctor.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> ChooseRole(RoleModificationModel model)
-                
-        //{
-            
-        //}
+        [HttpPost]
+        public async Task<ActionResult> ChooseRole(string role)
+        {
+            //had a hard time updating role.  well, here we are.  :-P
+            return RedirectToAction("Index");
+        }
 
         public ActionResult OtherAction()
         {
