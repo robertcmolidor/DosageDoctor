@@ -7,8 +7,7 @@ namespace DosageDoctor.Infrastructure
     {
         public static MvcHtmlString GetUserName(this HtmlHelper html, string id)
         {
-            AppUserManager mgr
-            = HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
+            AppUserManager mgr = HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
             return new MvcHtmlString(mgr.FindByIdAsync(id).Result.UserName);
         }
     }

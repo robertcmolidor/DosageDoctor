@@ -10,7 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using DosageDoctor.Infrastructure;
-using System.Web;
+
 
 namespace DosageDoctor.Controllers
 {

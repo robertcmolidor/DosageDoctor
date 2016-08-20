@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web;
 using System.Security.Principal;
+using System.Threading.Tasks;
+using DosageDoctor.Models;
+using Microsoft.AspNet.Identity;
 
 namespace DosageDoctor.Controllers
 {
@@ -21,9 +24,21 @@ namespace DosageDoctor.Controllers
             if (User.IsInRole("Doctor"))
                 return RedirectToAction("Index", "DrHome");
 
-            return View(GetData("Index"));
+            return RedirectToAction("ChooseRole");
         }
-        
+
+        public ActionResult ChooseRole()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //public async Task<ActionResult> ChooseRole(RoleModificationModel model)
+                
+        //{
+            
+        //}
+
         public ActionResult OtherAction()
         {
             return View("Index", GetData("OtherAction"));

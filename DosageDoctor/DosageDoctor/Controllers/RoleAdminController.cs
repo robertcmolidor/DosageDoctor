@@ -60,8 +60,7 @@ namespace DosageDoctor.Controllers
         {
             AppRole role = await RoleManager.FindByIdAsync(id);
             string[] memberIDs = role.Users.Select(x => x.UserId).ToArray();
-            IEnumerable<AppUser> members
-            = UserManager.Users.Where(x => memberIDs.Any(y => y == x.Id));
+            IEnumerable<AppUser> members = UserManager.Users.Where(x => memberIDs.Any(y => y == x.Id));
             IEnumerable<AppUser> nonMembers = UserManager.Users.Except(members);
             return View(new RoleEditModel
             {
