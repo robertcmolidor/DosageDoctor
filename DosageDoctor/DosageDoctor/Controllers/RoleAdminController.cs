@@ -26,8 +26,7 @@ namespace DosageDoctor.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityResult result
-                = await RoleManager.CreateAsync(new AppRole(name));
+                IdentityResult result = await RoleManager.CreateAsync(new AppRole(name));
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index");

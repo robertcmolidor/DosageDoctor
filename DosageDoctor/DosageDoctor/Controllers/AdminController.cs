@@ -1,17 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DosageDoctor.Infrastructure;
 using DosageDoctor.Models;
+using DosageDoctor.ViewModles;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace DosageDoctor.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             return View(UserManager.Users);
         }
